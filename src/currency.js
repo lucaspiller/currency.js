@@ -25,9 +25,18 @@
     symbol = format.unit;
     amount = c._a;
 
+    var decimalPart, integerPart, formattedAmount;
+
+    decimalPart = Math.round((amount % 1) * 100);
+    if (decimalPart == 0)
+      decimalPart = "00";
+    integerPart = amount - (amount % 1);
+
+    formattedAmount = integerPart.toString() + format.separator + decimalPart.toString();
+
     return formatString
       .replace(SYMBOL_PLACEHOLDER, symbol)
-      .replace(AMOUNT_PLACEHOLDER, amount);
+      .replace(AMOUNT_PLACEHOLDER, formattedAmount);
   };
 
   Currency.prototype = {
